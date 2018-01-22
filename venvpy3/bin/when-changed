@@ -1,4 +1,0 @@
-#!/home/ec2-user/build/ethdb2/venvpy3/bin/python3
-
-from whenchanged.whenchanged import main
-main()

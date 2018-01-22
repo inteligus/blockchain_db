@@ -103,3 +103,4 @@ ENV/
 # custom 
 secure.py
 eth-venv/
+venvpy3/
