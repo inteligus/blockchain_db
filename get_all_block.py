@@ -5,46 +5,47 @@ import pymysql
 
 import secure
 
-web3 = Web3(IPCProvider())
-maxBlock = web3.eth.blockNumber
+def import_records(blockNo=0):
 
-blockNo = 0
-while blockNo <= maxBlock:
+    web3 = Web3(IPCProvider())
+    maxBlock = web3.eth.blockNumber
 
-    block = web3.eth.getBlock(blockNo)
-    difficulty = block.difficulty
-    gasLimit = block.gasLimit
-    timestamp = block.timestamp
-    transactions = len(block.transactions)
-    uncles = len(block.uncles)
+    while blockNo <= maxBlock:
 
-    # Change datetime format
-    date = datetime.datetime.fromtimestamp(timestamp)
+        block = web3.eth.getBlock(blockNo)
+        difficulty = block.difficulty
+        gasLimit = block.gasLimit
+        timestamp = block.timestamp
+        transactions = len(block.transactions)
+        uncles = len(block.uncles)
 
-    print(date)
+        # Change datetime format
+        date = datetime.datetime.fromtimestamp(timestamp)
 
-    # Insert into database
-    connection = pymysql.connect(
-                host=secure.host,
-                user=secure.user,
-                password=secure.password,
-                db=secure.db)
+        print(date)
 
-    with connection.cursor() as cursor:
-        sql = "INSERT INTO ethereum_block (id, difficulty, gas_limit, timestamp, transaction_count, uncle_count) VALUES (" + \
-        str(blockNo) + ", " + \
-        str(difficulty) + ", " +  \
-        str(gasLimit) + ", " + \
-        "'" + str(date) + "', " + \
-        str(transactions) + ", " + \
-        str(uncles) + ")"
+        # Insert into database
+        connection = pymysql.connect(
+                    host=secure.host,
+                    user=secure.user,
+                    password=secure.password,
+                    db=secure.db)
 
-        cursor.execute(sql)
-    connection.commit()
+        with connection.cursor() as cursor:
+            sql = "INSERT INTO ethereum_block (id, difficulty, gas_limit, timestamp, transaction_count, uncle_count) VALUES (" + \
+            str(blockNo) + ", " + \
+            str(difficulty) + ", " +  \
+            str(gasLimit) + ", " + \
+            "'" + str(date) + "', " + \
+            str(transactions) + ", " + \
+            str(uncles) + ")"
 
-    blockNo = blockNo + 1
-    
-    
+            cursor.execute(sql)
+        connection.commit()
+
+        blockNo = blockNo + 1
+        
+        
 
 
 
