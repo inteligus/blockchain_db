@@ -46,7 +46,7 @@ semantic-version==2.6.0
 six==1.11.0
 toolz==0.9.0
 tox==2.9.1
-urllib3==1.22
+urllib3==1.26.5
 virtualenv==15.1.0
 watchdog==0.8.3
 -e git+https://github.com/ethereum/web3.py.git@84cc774932d5fa7aaacc15d636330704fc4c677d#egg=web3
